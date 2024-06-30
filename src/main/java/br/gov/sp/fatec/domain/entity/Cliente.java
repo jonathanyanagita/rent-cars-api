@@ -3,9 +3,13 @@ package br.gov.sp.fatec.domain.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,4 +24,7 @@ public class Cliente {
     private String nome;
     private String cpf;
     private String telefone;
+
+    @OneToMany(mappedBy = "id.cliente")
+    private Set<Aluguel> aluguels = new HashSet<>();
 }

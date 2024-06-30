@@ -1,11 +1,7 @@
 package br.gov.sp.fatec.domain.entity;
 
 import br.gov.sp.fatec.domain.enums.AluguelStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -28,6 +24,12 @@ public class Aluguel {
     private Date dataInicio;
     private Date dataFim;
     private Double valor;
+
+    @OneToOne
+    @JoinColumn(name = "carro.id")
     private Carro carro;
+
+    @ManyToOne
+    @JoinColumn(name = "cliente.id")
     private Cliente cliente;
 }
