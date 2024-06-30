@@ -21,4 +21,8 @@ public class Carro {
 
     @Enumerated(value = EnumType.STRING)
     private CarroStatus status;
+
+    private String modelo;
+    private String marca;
+    private int ano;
 }

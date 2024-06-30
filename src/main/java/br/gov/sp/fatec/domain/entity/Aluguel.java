@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -22,4 +24,10 @@ public class Aluguel {
 
     @Enumerated(value = EnumType.STRING)
     private AluguelStatus status;
+
+    private Date dataInicio;
+    private Date dataFim;
+    private Double valor;
+    private Carro carro;
+    private Cliente cliente;
 }
