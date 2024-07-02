@@ -1,10 +1,12 @@
 package br.gov.sp.fatec.service.impl;
 
 import br.gov.sp.fatec.domain.entity.Aluguel;
+import br.gov.sp.fatec.domain.entity.Carro;
 import br.gov.sp.fatec.domain.mapper.AluguelMapper;
 import br.gov.sp.fatec.domain.request.AluguelRequest;
 import br.gov.sp.fatec.domain.request.AluguelUpdateRequest;
 import br.gov.sp.fatec.domain.response.AluguelResponse;
+import br.gov.sp.fatec.domain.response.CarroResponse;
 import br.gov.sp.fatec.repository.AluguelRepository;
 import br.gov.sp.fatec.service.AluguelService;
 import java.util.List;
@@ -24,7 +26,14 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Override
     public AluguelResponse save(AluguelRequest aluguelRequest) {
-        return null;
+        Aluguel obj = new Aluguel();
+        obj.setDataInicio(aluguelRequest.dataInicio());
+        obj.setDataFim(aluguelRequest.dataFim());
+        obj.setValor(aluguelRequest.valor());
+
+        Aluguel save = aluguelRepository.save(obj);
+
+        return AluguelResponse.builder().status(save.getStatus()).build();
     }
 
     @Override

@@ -22,7 +22,14 @@ public class CarroServiceImpl implements CarroService {
 
     @Override
     public CarroResponse save(CarroRequest carroRequest) {
-        return null;
+        Carro obj = new Carro();
+        obj.setModelo(carroRequest.modelo());
+        obj.setMarca(carroRequest.marca());
+        obj.setAno(carroRequest.ano());
+
+        Carro save = carroRepository.save(obj);
+
+        return CarroResponse.builder().status(save.getStatus()).build();
     }
 
     @Override

@@ -1,9 +1,11 @@
 package br.gov.sp.fatec.service.impl;
 
+import br.gov.sp.fatec.domain.entity.Carro;
 import br.gov.sp.fatec.domain.entity.Cliente;
 import br.gov.sp.fatec.domain.mapper.ClienteMapper;
 import br.gov.sp.fatec.domain.request.ClienteRequest;
 import br.gov.sp.fatec.domain.request.ClienteUpdateRequest;
+import br.gov.sp.fatec.domain.response.CarroResponse;
 import br.gov.sp.fatec.domain.response.ClienteResponse;
 import br.gov.sp.fatec.repository.ClienteRepository;
 import br.gov.sp.fatec.service.ClienteService;
@@ -22,7 +24,14 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteResponse save(ClienteRequest clienteRequest) {
-        return null;
+        Cliente obj = new Cliente();
+        obj.setNome(clienteRequest.nome());
+        obj.setCpf(clienteRequest.cpf());
+        obj.setTelefone(clienteRequest.telefone());
+
+        Cliente save = clienteRepository.save(obj);
+
+        return ClienteResponse.builder().build();
     }
 
     @Override
