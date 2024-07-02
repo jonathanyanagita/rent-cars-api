@@ -1,5 +1,6 @@
 package br.gov.sp.fatec.service;
 
+import br.gov.sp.fatec.domain.entity.Cliente;
 import br.gov.sp.fatec.domain.request.ClienteRequest;
 import br.gov.sp.fatec.domain.request.ClienteUpdateRequest;
 import br.gov.sp.fatec.domain.response.ClienteResponse;
@@ -10,7 +11,7 @@ public interface ClienteService {
 
     ClienteResponse findById(Long id);
 
-    List<ClienteResponse> findAll();
+    List<Cliente> findAll();
 
     void updateById(Long id, ClienteUpdateRequest clienteUpdateRequest);
 

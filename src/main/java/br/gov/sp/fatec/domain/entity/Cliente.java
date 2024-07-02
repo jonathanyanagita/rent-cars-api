@@ -1,9 +1,6 @@
 package br.gov.sp.fatec.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -25,6 +22,6 @@ public class Cliente {
     private String cpf;
     private String telefone;
 
-    @OneToMany(mappedBy = "id.cliente")
-    private Set<Aluguel> aluguels = new HashSet<>();
+    @OneToOne(mappedBy = "aluguel", cascade = CascadeType.ALL)
+    private Aluguel aluguel;
 }

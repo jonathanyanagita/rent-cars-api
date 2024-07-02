@@ -29,7 +29,7 @@ public class Aluguel {
     @JoinColumn(name = "carro.id")
     private Carro carro;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "cliente.id")
     private Cliente cliente;
 }
