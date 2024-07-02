@@ -1,9 +1,11 @@
 package br.gov.sp.fatec.service.impl;
 
 import br.gov.sp.fatec.domain.entity.Aluguel;
+import br.gov.sp.fatec.domain.entity.Carro;
 import br.gov.sp.fatec.domain.mapper.AluguelMapper;
 import br.gov.sp.fatec.domain.request.AluguelRequest;
 import br.gov.sp.fatec.domain.request.AluguelUpdateRequest;
+import br.gov.sp.fatec.domain.request.CarroUpdateRequest;
 import br.gov.sp.fatec.domain.response.AluguelResponse;
 import br.gov.sp.fatec.repository.AluguelRepository;
 import br.gov.sp.fatec.service.AluguelService;
@@ -32,16 +34,24 @@ public class AluguelServiceImpl implements AluguelService {
 
     @Transactional(readOnly = true)
     @Override
-    public AluguelResponse findById(Long id) {
-        Aluguel obj = aluguelRepository.findById(id).orElseThrow(
+    public Aluguel findById(Long id) {
+        return aluguelRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Aluguel não encontrado com base no id: "+id));
-        return mapper.map(obj);
-    }
+        }
 
     @Transactional(readOnly = true)
     @Override
     public List<AluguelResponse> findAll() {
         return aluguelRepository.findAll().stream().map(mapper::map).toList();
+    }
+
+    @Override
+    public void updateById(Long id, AluguelUpdateRequest aluguelUpdateRequest) {
+        Aluguel obj = findById(id);
+        obj.setStatus(aluguelUpdateRequest.status());
+        obj.setDataFim(aluguelUpdateRequest.dataFim());
+        obj.setValor(aluguelUpdateRequest.valor());
+        aluguelRepository.save(obj);
     }
 
     @Transactional

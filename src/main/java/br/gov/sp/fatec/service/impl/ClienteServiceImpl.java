@@ -4,6 +4,7 @@ import br.gov.sp.fatec.domain.entity.Aluguel;
 import br.gov.sp.fatec.domain.entity.Carro;
 import br.gov.sp.fatec.domain.entity.Cliente;
 import br.gov.sp.fatec.domain.mapper.ClienteMapper;
+import br.gov.sp.fatec.domain.request.AluguelUpdateRequest;
 import br.gov.sp.fatec.domain.request.ClienteRequest;
 import br.gov.sp.fatec.domain.request.ClienteUpdateRequest;
 import br.gov.sp.fatec.domain.response.CarroResponse;
@@ -31,16 +32,23 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteResponse findById(Long id) {
-        Cliente obj = clienteRepository.findById(id).orElseThrow(
+    public Cliente findById(Long id) {
+        return clienteRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Cliente não encontrado com base no id: "+id));
-        return mapper.map(obj);
     }
 
     @Override
     public List<ClienteResponse> findAll() {
         return clienteRepository.findAll().stream().map(mapper::map).toList();    }
 
+    @Override
+    public void updateById(Long id, ClienteUpdateRequest clienteUpdateRequest) {
+        Cliente obj = findById(id);
+        obj.setNome(clienteUpdateRequest.nome());
+        obj.setCpf(clienteUpdateRequest.cpf());
+        obj.setTelefone(clienteUpdateRequest.telefone());
+        clienteRepository.save(obj);
+    }
 
     @Transactional
     @Override

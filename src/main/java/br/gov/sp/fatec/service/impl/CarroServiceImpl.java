@@ -33,15 +33,24 @@ public class CarroServiceImpl implements CarroService {
     }
 
     @Override
-    public CarroResponse findById(Long id) {
-        Carro obj = carroRepository.findById(id).orElseThrow(
+    public Carro findById(Long id) {
+        return carroRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Carro não encontrado com base no id: "+id));
-        return mapper.map(obj);
     }
 
     @Override
     public List<CarroResponse> findAll() {
         return carroRepository.findAll().stream().map(mapper::map).toList();
+    }
+
+    @Transactional
+    @Override
+    public void updateById(Long id, CarroUpdateRequest carroUpdateRequest) {
+        Carro obj = findById(id);
+        obj.setModelo(carroUpdateRequest.modelo());
+        obj.setMarca(carroUpdateRequest.marca());
+        obj.setAno(carroUpdateRequest.ano());
+        carroRepository.save(obj);
     }
 
     @Transactional
