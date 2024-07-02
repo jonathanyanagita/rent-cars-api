@@ -9,7 +9,7 @@ import java.util.List;
 public interface ClienteService {
     ClienteResponse save(ClienteRequest clienteRequest);
 
-    ClienteResponse findById(Long id);
+    Cliente findById(Long id);
 
     List<Cliente> findAll();
 
