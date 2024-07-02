@@ -9,11 +9,9 @@ import java.util.List;
 public interface ClienteService {
     ClienteResponse save(ClienteRequest clienteRequest);
 
-    Cliente findById(Long id);
+    ClienteResponse findById(Long id);
 
-    List<Cliente> findAll();
-
-    void updateById(Long id, ClienteUpdateRequest clienteUpdateRequest);
+    List<ClienteResponse> findAll();
 
     void deleteById(Long id);
 }

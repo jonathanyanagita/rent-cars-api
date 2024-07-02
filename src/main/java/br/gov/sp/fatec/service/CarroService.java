@@ -11,9 +11,7 @@ public interface CarroService {
 
     CarroResponse findById(Long id);
 
-    List<Carro> findAll();
-
-    void updateById(Long id, CarroUpdateRequest carroUpdateRequest);
+    List<CarroResponse> findAll();
 
     void deleteById(Long id);
 }

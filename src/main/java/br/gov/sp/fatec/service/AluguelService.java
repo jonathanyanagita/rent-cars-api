@@ -11,9 +11,7 @@ public interface AluguelService {
 
     AluguelResponse findById(Long id);
 
-    List<Aluguel> findAll();
-
-    void updateById(Long id, AluguelUpdateRequest aluguelUpdateRequest);
+    List<AluguelResponse> findAll();
 
     void deleteById(Long id);
 }

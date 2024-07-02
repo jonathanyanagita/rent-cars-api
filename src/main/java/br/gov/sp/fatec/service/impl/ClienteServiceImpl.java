@@ -1,5 +1,6 @@
 package br.gov.sp.fatec.service.impl;
 
+import br.gov.sp.fatec.domain.entity.Aluguel;
 import br.gov.sp.fatec.domain.entity.Carro;
 import br.gov.sp.fatec.domain.entity.Cliente;
 import br.gov.sp.fatec.domain.mapper.ClienteMapper;
@@ -12,6 +13,7 @@ import br.gov.sp.fatec.service.ClienteService;
 import java.util.List;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,40 +22,30 @@ import org.springframework.stereotype.Service;
 public class ClienteServiceImpl implements ClienteService {
 
     private final ClienteRepository clienteRepository;
-    private final ClienteMapper clienteMapper;
+    private final ClienteMapper mapper = ClienteMapper.instance;
 
     @Override
     public ClienteResponse save(ClienteRequest clienteRequest) {
-        Cliente obj = new Cliente();
-        obj.setNome(clienteRequest.nome());
-        obj.setCpf(clienteRequest.cpf());
-        obj.setTelefone(clienteRequest.telefone());
-
-        Cliente save = clienteRepository.save(obj);
-
-        return ClienteResponse.builder().build();
+        Cliente obj = mapper.map(clienteRequest);
+        return mapper.map(clienteRepository.save(obj));
     }
 
     @Override
-    public Cliente findById(Long id) {
-        return clienteRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+    public ClienteResponse findById(Long id) {
+        Cliente obj = clienteRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Cliente não encontrado com base no id: "+id));
+        return mapper.map(obj);
     }
 
     @Override
-    public List<Cliente> findAll() {
-        return clienteRepository.findAll();
-    }
+    public List<ClienteResponse> findAll() {
+        return clienteRepository.findAll().stream().map(mapper::map).toList();    }
 
-    @Override
-    public void updateById(Long id, ClienteUpdateRequest clienteUpdateRequest) {}
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
-        Cliente cliente = clienteRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
-        clienteRepository.delete(cliente);
+        findById(id);
+        clienteRepository.deleteById(id);
     }
 }
